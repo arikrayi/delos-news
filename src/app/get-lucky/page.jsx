@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import Navbar from '@/components/navbar';
 import useStorage from '@/hooks/useStorage';
 
@@ -40,6 +40,10 @@ export default function Page() {
   return (
     <main className="relative flex h-screen flex-col items-center">
       <Navbar />
+      <ToastContainer
+        testId="message"
+        position="top-center"
+      />
       <div className="relative flex items-center gap-2 w-full h-16 px-10 py-10">
         <h1 className="text-2xl font-bold text-black mx-auto absolute top-[calc(50%-1rem)] left-1/2 transform -translate-x-1/2">
           Get Lucky
@@ -53,6 +57,7 @@ export default function Page() {
         </h1>
         <button
           type="button"
+          name="gatcha-button"
           className="w-60 h-60 bg-gradient-primary text-text-primary rounded-full font-extrabold text-2xl animate-beat active:brightness-90"
           onClick={handleGatcha}
         >
