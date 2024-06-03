@@ -20,6 +20,11 @@ export function StorageProvider({ children }) {
     return storedValue ? JSON.parse(storedValue) : 0;
   });
 
+  const [jackpot, setJackpot] = useState(() => {
+    const storedValue = typeof window !== 'undefined' ? window.localStorage.getItem('jackpot') : null;
+    return storedValue ? JSON.parse(storedValue) : false;
+  });
+
   const setCoinValue = (newValue) => {
     setCoin(newValue);
     window.localStorage.setItem('coin', JSON.stringify(newValue));
@@ -35,10 +40,22 @@ export function StorageProvider({ children }) {
     window.localStorage.setItem('ticket', JSON.stringify(newValue));
   };
 
+  const setJackpotValue = (newValue) => {
+    setJackpot(newValue);
+    window.localStorage.setItem('jackpot', JSON.stringify(newValue));
+  };
+
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <StorageContext.Provider value={{
-      coin, setCoinValue, purchasedArticles, setPurchasedArticlesValue, ticket, setTicketValue,
+      coin,
+      setCoinValue,
+      purchasedArticles,
+      setPurchasedArticlesValue,
+      ticket,
+      setTicketValue,
+      jackpot,
+      setJackpotValue,
     }}
     >
       {children}

@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'gradient-news': 'linear-gradient(to top, #000000, transparent)',
+        'gradient-primary': 'linear-gradient(to bottom right, #147BD1, #0e5ea0)',
       },
       colors: {
         text: '#222222',
@@ -18,6 +19,15 @@ module.exports = {
         primary: '#147BD1',
         secondary: '#013349',
         black: '#39383C',
+      },
+      keyframes: {
+        beat: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' },
+        },
+      },
+      animation: {
+        beat: 'beat 2s ease-in-out infinite',
       },
     },
   },

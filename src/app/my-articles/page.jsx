@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <main className="relative flex h-screen flex-col items-center">
       <Navbar />
-      <div className="relative flex items-center gap-2 w-full h-16 px-10 py-10 border-t border-border">
+      <div className="relative flex items-center gap-2 w-full h-16 px-10 py-10">
         <h1 className="text-2xl font-bold text-black mx-auto absolute top-[calc(50%-1rem)] left-1/2 transform -translate-x-1/2">
           My Articles
         </h1>

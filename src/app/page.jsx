@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col items-center">
       <Navbar />
-      <div className="relative flex items-center gap-2 w-full h-16 px-10 py-10 border-t border-border">
+      <div className="relative flex items-center gap-2 w-full h-16 px-10 py-10">
         <input
           type="text"
           placeholder="Search Articles"

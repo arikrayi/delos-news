@@ -10,7 +10,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { coin, ticket } = useStorage();
   return (
-    <nav className="sticky top-0 w-full bg-white text-text z-40 flex items-center gap-5 py-6 px-10 mx-auto">
+    <nav className="sticky top-0 w-full bg-[#F7FAFE] text-text z-40 flex items-center gap-5 py-6 px-10 mx-auto shadow-sm">
       <div className="flex items-center gap-3 mr-auto">
         <Image src="/delos.png" alt="Delos Logo" width={100} height={100} />
         <span className="bg-black w-2 h-2 rounded-full" />
