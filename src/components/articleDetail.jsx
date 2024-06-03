@@ -1,12 +1,27 @@
 import Image from 'next/image';
 import React from 'react';
 import { IoMdClose } from 'react-icons/io';
+import { toast } from 'react-toastify';
+import { PiCoin } from 'react-icons/pi';
 import useClickOutside from '@/hooks/useClickOutside';
+import useStorage from '@/hooks/useStorage';
 
 export default function ArticleDetail({ article, setSelectedArticle }) {
   const [price, setPrice] = React.useState(0);
+  const [buyable, setBuyable] = React.useState(true);
+  const {
+    coin,
+    setCoinValue,
+    purchasedArticles,
+    setPurchasedArticlesValue,
+    ticket,
+    setTicketValue,
+  } = useStorage();
 
-  useClickOutside(['.article-detail', '.article'], () => setSelectedArticle(null), article);
+  useClickOutside(['.article-detail', '.article'], () => {
+    setSelectedArticle(null);
+    setBuyable(true);
+  }, article);
 
   React.useEffect(() => {
     if (!article) {
@@ -23,7 +38,37 @@ export default function ArticleDetail({ article, setSelectedArticle }) {
     } else {
       setPrice(0);
     }
-  }, [article]);
+
+    if (purchasedArticles.find((purchasedArticle) => purchasedArticle.id === article.id)) {
+      setBuyable(false);
+    }
+  }, [article, purchasedArticles]);
+
+  const buyArticle = () => {
+    if (price === 0) {
+      if (purchasedArticles.filter((purchasedArticle) => {
+        const d = new Date(purchasedArticle.published_date);
+        const df = Math.abs(new Date() - d);
+        const dfd = Math.ceil(df / (1000 * 60 * 60 * 24));
+        return dfd > 7;
+      }).length >= 5) {
+        toast.error('You can only purchase 5 free articles!');
+        return;
+      }
+    }
+    if (coin < price) {
+      toast.error('You do not have enough coins to purchase this article!');
+      return;
+    }
+    if (price >= 50000) {
+      setTicketValue(ticket + 3);
+    }
+    setCoinValue(coin - price);
+    setBuyable(true);
+    setPurchasedArticlesValue([...purchasedArticles, article]);
+    setSelectedArticle(null);
+    toast.success('Successfully purchased article!');
+  };
 
   if (!article) return null;
   return (
@@ -52,8 +97,22 @@ export default function ArticleDetail({ article, setSelectedArticle }) {
           <p className="text-sm">{article.abstract}</p>
         </div>
         <div className="flex p-5 justify-between items-end mt-auto">
-          <p className="text-lg font-semibold">{price ? price.toLocaleString() : 'FREE'}</p>
-          <button type="button" className="px-20 py-2 bg-primary text-text-primary rounded-full transition hover:scale-[1.01] active:scale-100 active:brightness-90">Get</button>
+          <p className="text-lg font-semibold">
+            {price ? (
+              <div className="flex items-center gap-2">
+                <PiCoin className="inline-block text-2xl text-yellow-500 shrink-0" />
+                {price.toLocaleString()}
+              </div>
+            ) : 'FREE'}
+          </p>
+          <button
+            type="button"
+            className="w-40 py-2 bg-primary text-text-primary rounded-full transition hover:scale-[1.01] active:scale-100 active:brightness-90 disabled:bg-text-secondary disabled:text-text-primary disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 disabled:active:brightness-100"
+            onClick={buyArticle}
+            disabled={!buyable}
+          >
+            {buyable ? 'Get' : 'Already Owned'}
+          </button>
         </div>
       </div>
     </div>
