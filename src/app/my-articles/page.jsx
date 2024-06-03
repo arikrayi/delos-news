@@ -58,7 +58,7 @@ export default function Home() {
                   className="absolute top-0 left-0 w-full h-full object-cover"
                 />
                 <div className="z-10 h-full w-full py-3 px-5 text-text-primary bg-gradient-news flex flex-col items-start justify-end">
-                  <h2 className="text-xl font-semibold">
+                  <h2 className="text-xl font-semibold truncate w-full">
                     {post.title}
                   </h2>
                   <div className="flex items-center gap-1.5 mt-0.5 mb-3">
